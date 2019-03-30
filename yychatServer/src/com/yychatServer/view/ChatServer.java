@@ -5,37 +5,42 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import com.yychatServer.controller.StartServer;
+import controller.StartServer;
 
-public class ChatServer extends JFrame implements ActionListener{
+public class ChatServer extends JFrame implements ActionListener{//alt+/
 	JButton jb1;
 	JButton jb2;
 	JPanel jp;
+	
 	public ChatServer(){
-		jb1 = new JButton("启动服务器");
+		jb1=new JButton("启动服务器");
 		jb1.addActionListener(this);
-		jb2 = new JButton("停止服务器");
-		jp = new JPanel();
+		jb2=new JButton("停止服务器");
+		jp=new JPanel();
 		jp.add(jb1);
 		jp.add(jb2);
 		
-		this.add(jp);
-		this.setTitle("YyChat服务器");
-		this.setSize(240, 240);
 		
+		this.add(jp);
+		this.setTitle("YYChat服务器");
+		this.setSize(240,240);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
+
 	public static void main(String[] args) {
-		 ChatServer  chatServer = new  ChatServer();
+		ChatServer chatServer=new ChatServer();
+		
 
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new StartServer();
-		
+		StartServer myServer;
+		if(arg0.getSource()==jb1) myServer = new StartServer();//监听端口，建立和客户端的连接
+		if(arg0.getSource()==jb2) System.exit(0);
 	}
 
 }
