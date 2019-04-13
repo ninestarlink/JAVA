@@ -8,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.*;
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
+import com.yychat.view.FriendChat1;
 public class FriendList extends JFrame implements ActionListener,MouseListener {//容器
 
 	//成员变量
@@ -136,9 +138,19 @@ public class FriendList extends JFrame implements ActionListener,MouseListener {
 		if(arg0.getClickCount()==2){
 			JLabel jlbl=(JLabel)arg0.getSource();
 			String receiver=jlbl.getText();
-			//new FriendChat(this.userName,receiver);
-			new Thread(new FriendChat(this.userName,receiver)).start();
-		    
+			new FriendChat1(this.userName,receiver);
+
+			//			new Thread(new FriendChat(this.userName,receiver)).start();
+			/* 有问题
+			FriendChat1 friendChat1 = (FriendChat1)hmFriendChat1.get(userName+"to"+receiver);
+		    if(friendChat1 == null){
+		    	friendChat1 = new FriendChat1(this.userName,receiver);
+		    	hmFriendChat1.put(userName+"to"+receiver,friendChat1);
+		    	
+		    }else{
+		    	friendChat1.setVisible(true);
+		    }
+		*/
 		}
 		
 		

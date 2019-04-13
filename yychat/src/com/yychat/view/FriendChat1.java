@@ -1,4 +1,4 @@
-/*package com.yychat.view;
+package com.yychat.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,7 @@ import javax.swing.*;
 import com.yychat.controller.ClientConnetion;
 import com.yychat.model.Message;
 
-public class FriendChat extends JFrame implements ActionListener,Runnable{//只允许单继承，但可有多个接口
+public class FriendChat1 extends JFrame implements ActionListener{//只允许单继承，但可有多个接口
 	JScrollPane jsp;
 	JTextArea jta;
 	
@@ -25,7 +25,7 @@ public class FriendChat extends JFrame implements ActionListener,Runnable{//只允
 	String receiver;
 	
 
-	public FriendChat(String sender,String receiver) {
+	public FriendChat1(String sender,String receiver) {
 		this.sender=sender;
 		this.receiver=receiver;
 		
@@ -75,9 +75,9 @@ public class FriendChat extends JFrame implements ActionListener,Runnable{//只允
 				Socket s = (Socket)ClientConnetion.hmSocket.get(sender);
 				oos=new ObjectOutputStream(s.getOutputStream());
 				oos.writeObject(mess);
-				///*ObjectInputStream ois=new ObjectInputStream(ClientConnetion.s.getInputStream());
+				/*ObjectInputStream ois=new ObjectInputStream(ClientConnetion.s.getInputStream());
 				mess=(Message)ois.readObject();
-				//jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r+\n");
+				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r+\n");*/
 				
 				//是不是在这里接收
 				
@@ -89,25 +89,5 @@ public class FriendChat extends JFrame implements ActionListener,Runnable{//只允
 		
 	}
 
-	@Override
-	public void run() {
-		ObjectInputStream ois;
-		Message mess;
-		while(true){
-			try {
-				//接受服务器转发得Message
-				Socket s = (Socket)ClientConnetion.hmSocket.get(sender);
-				ois = new ObjectInputStream( s.getInputStream());
-				mess=(Message)ois.readObject();
-				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r\n");
-				
-			} catch (IOException | ClassNotFoundException e) {
-				
-				e.printStackTrace();
-			}
-		}
-		
-	}
 
 }
-*/
