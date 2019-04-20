@@ -13,7 +13,7 @@ import javax.swing.*;
 import com.yychat.controller.ClientConnetion;
 import com.yychat.model.Message;
 
-public class FriendChat extends JFrame implements ActionListener,Runnable{//只允许单继承，但可有多个接口
+public class FriendChat extends JFrame implements ActionListener,Runnable{//只允许单继承，但是可以实现多接口
 	JScrollPane jsp;
 	JTextArea jta;
 	
@@ -72,16 +72,16 @@ public class FriendChat extends JFrame implements ActionListener,Runnable{//只允
 			mess.setMessageType(Message.message_Common);
 			ObjectOutputStream oos;
 			try {
-				Socket s = (Socket)ClientConnetion.hmSocket.get(sender);
-				oos=new ObjectOutputStream(s.getOutputStream());
+				Socket s=(Socket)ClientConnetion.hmSocket.get(sender);
+				oos=new ObjectOutputStream(s.getOutputStream());//拿不到非静态Socket对象
 				oos.writeObject(mess);
-				///*ObjectInputStream ois=new ObjectInputStream(ClientConnetion.s.getInputStream());
+				
+				//是不是在这里接收？
+				/*ObjectInputStream ois=new ObjectInputStream(ClientConnetion.s.getInputStream());
 				mess=(Message)ois.readObject();
-				//jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r+\n");
-				
-				//是不是在这里接收
-				
-				} catch (IOException e) {
+				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r\n");
+				*/
+/*				} catch (IOException  e) {
 				e.printStackTrace();
 			}
 		}
@@ -95,19 +95,16 @@ public class FriendChat extends JFrame implements ActionListener,Runnable{//只允
 		Message mess;
 		while(true){
 			try {
-				//接受服务器转发得Message
-				Socket s = (Socket)ClientConnetion.hmSocket.get(sender);
-				ois = new ObjectInputStream( s.getInputStream());
-				mess=(Message)ois.readObject();
+				//接受服务器转发过来的Message
+				Socket s=(Socket)ClientConnetion.hmSocket.get(sender);
+				ois = new ObjectInputStream(s.getInputStream());
+				mess=(Message)ois.readObject();//等待Server发送Message，阻塞
 				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r\n");
-				
 			} catch (IOException | ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			}
 		}
-		
 	}
 
-}
-*/
+}*/
+

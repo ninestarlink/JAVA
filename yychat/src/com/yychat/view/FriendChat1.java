@@ -13,7 +13,7 @@ import javax.swing.*;
 import com.yychat.controller.ClientConnetion;
 import com.yychat.model.Message;
 
-public class FriendChat1 extends JFrame implements ActionListener{//只允许单继承，但可有多个接口
+public class FriendChat1 extends JFrame implements ActionListener{//只允许单继承，但是可以实现多接口
 	JScrollPane jsp;
 	JTextArea jta;
 	
@@ -72,22 +72,21 @@ public class FriendChat1 extends JFrame implements ActionListener{//只允许单继承
 			mess.setMessageType(Message.message_Common);
 			ObjectOutputStream oos;
 			try {
-				Socket s = (Socket)ClientConnetion.hmSocket.get(sender);
-				oos=new ObjectOutputStream(s.getOutputStream());
+				Socket s=(Socket)ClientConnetion.hmSocket.get(sender);
+				oos=new ObjectOutputStream(s.getOutputStream());//拿不到非静态Socket对象
 				oos.writeObject(mess);
+				
+				//是不是在这里接收？
 				/*ObjectInputStream ois=new ObjectInputStream(ClientConnetion.s.getInputStream());
 				mess=(Message)ois.readObject();
-				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r+\n");*/
-				
-				//是不是在这里接收
-				
-				} catch (IOException e) {
+				jta.append(mess.getSender()+"对"+mess.getReceiver()+"说:"+mess.getContent()+"\r\n");
+				*/
+				} catch (IOException  e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
 	}
-
-
+	public void appendJta(String chatMessageString){
+		jta.append(chatMessageString+"\r\n");
+	}
 }

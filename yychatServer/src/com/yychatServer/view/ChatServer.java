@@ -7,15 +7,16 @@ import javax.swing.*;
 
 import controller.StartServer;
 
-public class ChatServer extends JFrame implements ActionListener{//alt+/
+public class ChatServer extends JFrame implements ActionListener{//实现接口
 	JButton jb1;
 	JButton jb2;
 	JPanel jp;
 	
 	public ChatServer(){
 		jb1=new JButton("启动服务器");
-		jb1.addActionListener(this);
+		jb1.addActionListener(this);//给按钮添加监听器
 		jb2=new JButton("停止服务器");
+		jb2.addActionListener(this);
 		jp=new JPanel();
 		jp.add(jb1);
 		jp.add(jb2);
@@ -38,9 +39,8 @@ public class ChatServer extends JFrame implements ActionListener{//alt+/
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		StartServer myServer;
-		if(arg0.getSource()==jb1) myServer = new StartServer();//监听端口，建立和客户端的连接
-		if(arg0.getSource()==jb2) System.exit(0);
+		if(arg0.getSource()==jb1) new StartServer();//监听端口，建立和客户端的连接
+		if(arg0.getSource()==jb2) System.exit(0);//退出程序
 	}
 
 }

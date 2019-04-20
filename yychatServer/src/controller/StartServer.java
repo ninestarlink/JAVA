@@ -15,19 +15,19 @@ public class StartServer {
 	ServerSocket ss;
 	Socket s;
 	
-	public HashMap hmSocket=new HashMap<String,Socket>();//泛型，通用类
+	public static HashMap hmSocket=new HashMap<String,Socket>();//泛型，通用类
 	String userName;
 	public StartServer(){
 		try {
 	        ss=new ServerSocket(3456);//服务器端口监听3456
 	        System.out.println("服务器已经启动，监听3456端口...");
-	        while(true){
+	        while(true){//?多线程问题
 	        	s=ss.accept();//等待客户端建立连接
 	            System.out.println(s);//输出连接对象
 	        
 	            //字节输入流 包装成 对象输入流
 	            ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
-	            User user=(User)ois.readObject();//接受用户登录对象 user
+	            User user=(User)ois.readObject();//接受用户登录对象user
 	            this.userName=user.getUserName();
 	            System.out.println(user.getUserName());
 	            System.out.println(user.getPassWord());
@@ -48,12 +48,11 @@ public class StartServer {
 	            
 	            if(user.getPassWord().equals("123456")){
 	            	//保存每一个用户的Socket
-	                hmSocket.put(userName, s);//
+	                hmSocket.put(userName, s);
 	                System.out.println("保存用户的Socket"+userName+s);
 	                //如何接收客户端的聊天信息？另建一个线程来接收聊天信息
 	                new ServerReceiverThread(s,hmSocket).start();//创建线程，并让线程就绪
 	                System.out.println("启动线程成功");
-	                
 	            }
 	            
 	        }
